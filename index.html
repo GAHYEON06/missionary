@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>태국 선교 이야기</title>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --main-color: #e6b4fe; 
+            --bg-color: #f8f9fa;
+        }
+
+        /* 1. 전체 비율 설정 */
+        body {
+            font-family: 'Noto Sans KR', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: var(--bg-color);
+            color: #333;
+            display: block; /* 중앙 고정 해제 */
+        }
+
+        /* 2. 화면 전체를 쓰도록 설정 */
+        .app-wrapper {
+            width: 100%; /* 너비 100% 사용 */
+            min-height: 100vh;
+            padding-bottom: 90px; /* 하단바가 가리지 않게 넉넉히 */
+        }
+
+        header {
+            background: linear-gradient(135deg, var(--main-color), #ff8e53);
+            color: white;
+            padding: 8% 5%; /* 고정 px 대신 % 단위 사용 (화면 크기에 비례) */
+            text-align: center;
+            border-radius: 0 0 5vw 5vw; /* 굴곡도 화면 너비(vw)에 비례 */
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        .content-section { 
+            display: none; 
+            padding: 3% 5%; /* 양옆 여백을 화면 비율에 맞춤 */
+            animation: fadeIn 0.5s; 
+        }
+        
+        .active { display: block; }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* 3. 카드 디자인 (비율형) */
+        .card {
+            background: white;
+            border-radius: 20px;
+            padding: 5%; /* 내부 여백도 비율로 */
+            margin-bottom: 20px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            /* 너비가 넓어질 때 너무 길어 보이지 않게 조절 가능 */
+            width: 90%; 
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        h1 { font-size: 7vw; } /* 글자 크기도 화면 너비에 비례하게 설정 (반응형 텍스트) */
+        h2 { color: var(--main-color); border-left: 5px solid var(--main-color); padding-left: 15px; font-size: 5vw; }
+
+        /* 화면이 너무 커질 때 글자가 무한정 커지는 걸 방지 (미디어 쿼리) */
+        @media (min-width: 768px) {
+            h1 { font-size: 40px; }
+            h2 { font-size: 24px; }
+            header { padding: 40px; }
+        }
+
+        /* 4. 하단 탭 바 (화면 너비에 맞춰 확장) */
+        .bottom-nav {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.98);
+            display: flex;
+            justify-content: space-around;
+            padding: 15px 0;
+            box-shadow: 0 -2px 15px rgba(0,0,0,0.1);
+            z-index: 1000;
+        }
+
+        .nav-item {
+            text-align: center;
+            font-size: 14px;
+            color: #888;
+            cursor: pointer;
+            flex: 1;
+            transition: 0.2s;
+        }
+
+        .nav-item.active-nav { color: var(--main-color); font-weight: bold; transform: scale(1.1); }
+
+        .btn {
+            background: var(--main-color);
+            color: white;
+            border: none;
+            padding: 15px;
+            border-radius: 15px;
+            width: 100%;
+            font-size: 1.1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .btn:active { transform: scale(0.98); opacity: 0.9; }
+
+        /* 영상 비율 유지 컨테이너 (16:9 비율) */
+        .video-container {
+            position: relative;
+            padding-bottom: 56.25%; 
+            height: 0;
+            background: #eee;
+            border-radius: 15px;
+            overflow: hidden;
+        }
+        .video-container div {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            display: flex; align-items: center; justify-content: center; color: #999;
+        }
+    </style>
+</head>
+<body>
+
+<div class="app-wrapper">
+    <header>
+        <p style="margin:0; font-size:1rem; opacity:0.9;">성신여대 25학번 정가현 순장</p>
+        <h1 style="margin:10px 0;">สวัสดีค่ะ! (안녕하세요!)</h1>
+        <p style="word-break: keep-all; font-weight: 300; line-height: 1.5;">"주의 청년들이 예수의 꿈을 꾸고 인류 구원의 환상을 보게 하소서"</p>
+    </header>
+
+    <div id="home" class="content-section active">
+        <div class="card">
+            <h2>안녕하세요, 동역자 여러분!</h2>
+            <p>성신여대 AI융합학부 AI전공 25학번 <b>정가현 순장</b> 입니다.</p>
+            <p>작년 멕시코 선교에서 받은 큰 은혜를 기억하며, 이번 8월에는 18명의 순장님들과 함께 <b>태국 방콕</b>으로 향합니다.</p>
+            <p>하나님께서 예비하신 발걸음을 기대하며, 기도로 함께해주시길 부탁드립니다.</p>
+        </div>
+        <div class="card">
+            <h3>🎬 선교 소개 영상</h3>
+            <div class="video-container">
+                <div>영상을 여기에 연결하세요</div>
+            </div>
+        </div>
+    </div>
+
+    <div id="schedule" class="content-section">
+        <div class="card">
+            <h2>선교 일정 안내</h2>
+            <ul>
+                <li><b>현지 사역:</b> 8월 3일 ~ 8월 14일 (방콕)</li>
+                <li><b>행정 모임:</b> 5월 9일</li>
+                <li><b>준비 모임:</b> 5월~7월 중 4회</li>
+                <li><b>최종 점검:</b> 7월 중</li>
+            </ul>
+        </div>
+    </div>
+
+    <div id="prayer" class="content-section">
+        <div class="card">
+            <h2>함께 기도해주세요</h2>
+            <ol>
+                <li>18명의 순장님들이 영육간에 강건하도록</li>
+                <li>방콕 땅에 하나님의 사랑이 온전히 전해지도록</li>
+                <li>모든 준비 과정 속에 성령의 하나됨이 있도록</li>
+                <li>필요한 모든 재정이 은혜로 채워지도록</li>
+            </ol>
+        </div>
+    </div>
+
+    <div id="support" class="content-section">
+        <div class="card">
+            <h2>마음을 나누어주세요</h2>
+            <p>1인당 선교 재정: <b>약 200만 원</b></p>
+            <hr style="border: 0; height: 1px; background: #eee; margin: 15px 0;">
+            <p style="font-size: 0.9rem; color: #666;">📅 <b>입금 일정</b></p>
+            <ul style="font-size: 0.9rem;">
+                <li>5/1: 예약금 20만원</li>
+                <li>5/31: 중도금</li>
+                <li>7/19: 막도금</li>
+            </ul>
+            <button class="btn" onclick="copyAccount()">후원 계좌 복사하기</button>
+        </div>
+    </div>
+
+       <div class="bottom-nav">
+        <div class="nav-item active-nav" onclick="showTab('home', this)">🏠<br>홈</div>
+        <div class="nav-item" onclick="showTab('schedule', this)">🗓️<br>일정</div>
+        <div class="nav-item" onclick="showTab('prayer', this)">🙏<br>기도</div>
+        <div class="nav-item" onclick="showTab('support', this)">❤️<br>후원</div>
+    </div>
+</div>
+
+<script>
+    function showTab(tabId, element) {
+        const sections = document.querySelectorAll('.content-section');
+        sections.forEach(s => s.classList.remove('active'));
+
+        document.getElementById(tabId).classList.add('active');
+
+        const navItems = document.querySelectorAll('.nav-item');
+        navItems.forEach(n => n.classList.remove('active-nav'));
+        element.classList.add('active-nav');
+
+        window.scrollTo(0, 0);
+    }
+
+    function copyAccount() {
+        const account = "신한 110-000-000000 정가현"; // 실제 계좌로 수정하세요!
+        navigator.clipboard.writeText(account).then(() => {
+            alert("계좌번호가 복사되었습니다. 소중한 마음 감사합니다!");
+        });
+    }
+</script>
+
+</body>
+</html>
