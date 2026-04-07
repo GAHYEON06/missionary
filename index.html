@@ -128,6 +128,95 @@
             top: 0; left: 0; width: 100%; height: 100%;
             display: flex; align-items: center; justify-content: center; color: #999;
         }
+		
+		h2.no-line {
+            border-left: none !important;
+            padding-left: 0 !important;
+        }
+		
+		/* 팝업 배경 (화면 전체를 덮는 반투명 검은색) */
+		.modal-overlay {
+			display: none; /* 처음엔 안 보임 */
+			position: fixed;
+			top: 0; left: 0;
+			width: 100%; height: 100%;
+			background-color: rgba(0, 0, 0, 0.5);
+			z-index: 1000; /* 맨 위에 뜨게 함 */
+			justify-content: center;
+			align-items: center;
+		}
+
+		.modal-content {
+			background-color: white;
+			border-radius: 20px;
+			width: 85%;
+			max-width: 400px;
+			display: flex;
+			flex-direction: column; /* 위아래로 배치 */
+			max-height: 60vh;      /* 화면의 80%까지만 커짐 */
+			max-height: 50vh;      /* 화면의 80%까지만 커짐 */
+			overflow: hidden;       /* 삐져나오는 건 숨김 (중요!) */
+			position: relative;
+		}
+
+		/* 슥슥 스크롤 되는 중간 영역 */
+		.modal-body {
+			padding: 30px 30px 10px 30px; /* 아래쪽 여백은 살짝 줄임 */
+			overflow-y: auto;             /* 여기서만 스크롤 발생! */
+			flex: 1;                      /* 남는 공간을 다 차지함 */
+		}
+
+		/* 하단 버튼 고정 영역 */
+		.modal-footer {
+			padding: 15px 30px 25px 30px;
+			background-color: white;      /* 배경색을 줘서 내용이 비치지 않게 함 */
+			border-top: 1px solid #eee;   /* 살짝 선을 그어주면 더 고급져요 */
+			text-align: center;
+		}
+
+		/* 확인 버튼 스타일 */
+		.confirm-btn {
+			width: 100%; /* 버튼을 꽉 채우면 누르기 편해요 */
+			background-color: #a384ff;
+			color: white;
+			border: none;
+			padding: 12px;
+			border-radius: 10px;
+			cursor: pointer;
+			font-weight: bold;
+		}
+
+		/* 닫기 버튼 (X) */
+		.close-btn {
+			position: absolute;
+			top: 15px; right: 20px;
+			font-size: 1.5rem;
+			cursor: pointer;
+			color: #aaa;
+		}
+
+		/* 버튼 디자인 */
+		.open-btn, .confirm-btn {
+			background-color: #a384ff;
+			color: white;
+			border: none;
+			padding: 10px 20px;
+			border-radius: 10px;
+			cursor: pointer;
+			font-weight: bold;
+		}
+		
+		.modal-content::-webkit-scrollbar,
+		.modal-body::-webkit-scrollbar {
+			display: none; /* 스크롤바를 아예 안 보이게 함 */
+		}
+
+		/* 2. 파이어폭스, IE, 구형 엣지 */
+		.modal-content,
+		.modal-body {
+			-ms-overflow-style: none;  /* IE and Edge */
+			scrollbar-width: none;  /* Firefox */
+		}
     </style>
 </head>
 <body>
@@ -141,13 +230,33 @@
     </header>
 
     <div id="home" class="content-section active">
-        <div class="card"> /* 자기소개*/
+        <div class="card"> 
             <h2>안녕하세요, 동역자 여러분!</h2>
             <p>성신여대 AI융합학부 AI전공 25학번 <b>정가현 순장</b> 입니다.</p>
             <p>작년 멕시코 선교에서 받은 큰 은혜를 기억하며, 이번 8월에는 18명의 순장님들과 함께 <b>태국 방콕</b>으로 향합니다.</p>
             <p>하나님께서 예비하신 발걸음을 기대하며, 기도로 함께해주시길 부탁드립니다.</p>
         </div>
-        <div class="card"> /*영상 근데 영상이 가능할까?*/
+		<div class="card"> 
+		    <h2>자기소개</h2>
+			<button onclick="openModal()" class="open-btn">안녕하세요!</button>
+
+            <div id="myModal" class="modal-overlay">
+				<div class="modal-content">
+					<span class="close-btn" onclick="closeModal()">&times;</span>
+				
+					<div class="modal-body">
+						<h2 style="color: #a384ff; border: none;">자기소개</h2>
+						
+						<div style="height: 500px;">내용이 길어지는 중... 🇹🇭</div>
+					</div>
+
+					<div class="modal-footer">
+						<button onclick="closeModal()" class="confirm-btn">확인</button>
+					</div>
+				</div>
+			</div>
+        </div>
+        <div class="card"> 
             <h3>🎬 선교 소개 영상</h3>
             <div class="video-container">
                 <div>/영상을 여기에 연결하세요</div>
@@ -156,7 +265,7 @@
     </div>
 
     <div id="schedule" class="content-section">
-        <div class="card"> /* 일정 */
+        <div class="card">  
             <h2>선교 일정 안내</h2>
             <ul>
                 <li><b>현지 사역:</b> 8월 3일 ~ 8월 14일 (방콕)</li>
@@ -164,11 +273,118 @@
                 <li><b>준비 모임:</b> 5월~7월 중 4회</li>
                 <li><b>최종 점검:</b> 7월 중</li>
             </ul>
-        </div>
     </div>
+	
+	<div class="card">
+	<h2 style="text-align: center !important; border-left: none !important; padding-left: 0 !important; color: #a384ff;">
+    선교 달력
+    </h2>
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+        <button onclick="prevMonth()" style="background: none; border: none; font-size: 1.5rem; cursor: pointer; color: #a384ff;">❮</button>
+        <h2 id="calendar-title" class="no-line" style="margin: 0; color: #a384ff;">2026.05</h2>
+        <button onclick="nextMonth()" style="background: none; border: none; font-size: 1.5rem; cursor: pointer; color: #a384ff;">❯</button>
+    </div>
+    
+    <table id="calendar-table" style="width: 100%; border-collapse: collapse; text-align: center; table-layout: fixed;">
+        <thead>
+            <tr style="color: #888; font-size: 0.8rem;">
+                <th>일</th> <th>월</th> <th>화</th> <th>수</th> <th>목</th> <th>금</th> <th>토</th>
+            </tr>
+        </thead>
+        <tbody id="calendar-body">
+            </tbody>
+    </table>
+    <div id="schedule-info" style="margin-top: 15px; font-size: 0.9rem; color: #666; padding: 10px; background: #f9f7ff; border-radius: 10px;">
+        📅 이달의 주요 일정: <span id="event-text">선교 준비 모임</span>
+    </div>
+</div>
+
+<script>
+    // 달력 데이터 (5, 6, 7, 8월)
+    const calendarData = [
+        { month: '2026.05', startDay: 5, lastDate: 31, event: "팀 빌딩 및 첫 준비 모임" },
+        { month: '2026.06', startDay: 1, lastDate: 30, event: "집중 기도 주간 및 강의 수강" },
+        { month: '2026.07', startDay: 3, lastDate: 31, event: "짐 싸기 및 최종 리허설" },
+        { month: '2026.08', startDay: 6, lastDate: 31, event: "🇹🇭 태국 방콕 선교 현지 사역!" }
+    ];
+
+    let currentIndex = 0; // 시작은 5월
+
+    function renderCalendar() {
+        const data = calendarData[currentIndex];
+        document.getElementById('calendar-title').innerText = data.month;
+        document.getElementById('event-text').innerText = data.event;
+        
+        let html = '';
+        let date = 1;
+        
+        for (let i = 0; i < 6; i++) { // 최대 6주
+            html += '<tr>';
+            for (let j = 0; j < 7; j++) {
+                if (i === 0 && j < data.startDay) {
+                    html += '<td style="padding: 10px;"></td>';
+                } else if (date > data.lastDate) {
+                    html += '<td style="padding: 10px;"></td>';
+                } else {
+                    // 1. 기본 스타일 설정 (동그라미를 예쁘게 만들기 위해 span 사용)
+                    let baseStyle = "display: inline-block; width: 30px; height: 30px; line-height: 30px; border-radius: 50%; font-weight: 500;";
+                    let extraStyle = ""; 
+
+                    // 2. [요일 강조] 매주 화요일(j === 2)을 보라색 배경으로 강조!
+                    //if (j === 2) { 
+                    //    extraStyle = "background-color: #f0ebff; color: #a384ff; font-weight: bold;"; 
+                    //}
+
+                    // 3. [날짜 강조] 8월 6일(선교 시작일)을 분홍색 배경으로 강조!
+                    if (data.month === '2026.08' && date === 3) {
+                        extraStyle = "background-color: #ff8e8e; color: white; font-weight: bold;"; 
+                    }
+
+                    // 4. 일요일(j === 0) 글자색 빨간색 (강조 배경 없을 때만)
+                    if (j === 0 && extraStyle === "") {
+                        extraStyle = "color: #ff8e8e;";
+                    }
+                    
+                    // 5. 토요일(j === 6) 글자색 파란색 (강조 배경 없을 때만)
+                    if (j === 6 && extraStyle === "") {
+                        extraStyle = "color: #8eadff;";
+                    }
+
+                    // 최종 출력: td 안에 span을 넣어 동그란 효과를 줍니다.
+                    html += `<td style="padding: 10px;"><span style="${baseStyle} ${extraStyle}">${date}</span></td>`;
+                    date++;
+                }
+            }
+            html += '</tr>';
+            if (date > data.lastDate) break;
+        }
+        document.getElementById('calendar-body').innerHTML = html;
+    }
+
+    function prevMonth() {
+        if (currentIndex > 0) {
+            currentIndex--;
+            renderCalendar();
+        }
+    }
+
+    function nextMonth() {
+        if (currentIndex < calendarData.length - 1) {
+            currentIndex++;
+            renderCalendar();
+        }
+    }
+
+    // 처음 로드할 때 실행
+    renderCalendar();
+</script>
+
+
+</div>
+   
 
     <div id="prayer" class="content-section">
-        <div class="card">
+        <div class="card"> 
             <h2>함께 기도해주세요</h2>
             <ol>
                 <li>18명의 순장님들이 영육간에 강건하도록</li>
@@ -178,7 +394,7 @@
             </ol>
         </div>
 
-        <div class="card"> /*기도제목*/
+        <div class="card"> 
             <h2>기도 제목 남기기</h2> 
             <p style="font-size: 0.9rem; color: #666; margin-bottom: 15px; word-break: keep-all;">
                 <b>정가현 순장</b>과 태국 선교팀을 위해<br>응원과 기도 제목을 남겨주세요!
@@ -212,7 +428,7 @@
     </script>
 	
     <div id="support" class="content-section">
-        <div class="card"> /*후원*/
+        <div class="card"> 
             <h2>마음을 나누어주세요</h2>
             <p>1인당 선교 재정: <b>약 200만 원</b></p>
             <hr style="border: 0; height: 1px; background: #eee; margin: 15px 0;">
@@ -256,5 +472,27 @@
     }
 </script>
 
+<script>
+function openModal() {
+		// 팝업창을 보이게 함 (flex로 설정해서 중앙 정렬)
+		document.getElementById("myModal").style.display = "flex";
+	}
+
+	function closeModal() {
+		// 팝업창을 다시 숨김
+		document.getElementById("myModal").style.display = "none";
+	}
+
+	// 팝업창 바깥쪽(검은 배경)을 클릭해도 닫히게 하고 싶다면?
+	window.onclick = function(event) {
+		const modal = document.getElementById("myModal");
+		if (event.target == modal) {
+			modal.style.display = "none";
+		}
+	}
+</script>
+
 </body>
 </html>
+
+	
